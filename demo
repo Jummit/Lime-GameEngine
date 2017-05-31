@@ -1,0 +1,67 @@
+os.loadAPI("engine")
+
+local sprites = {
+  player = engine.sprite(
+    {
+      paintutils.loadImage("/dragon/1"),
+      paintutils.loadImage("/dragon/2"),
+      paintutils.loadImage("/dragon/3"),
+      paintutils.loadImage("/dragon/4"),
+      paintutils.loadImage("/dragon/3"),
+      paintutils.loadImage("/dragon/2")
+    },
+    true,
+    3,
+    3
+  ),
+  grass1 = engine.sprite(paintutils.loadImage("tile1")),
+  grass2 = engine.sprite(paintutils.loadImage("tile3")),
+  stone = engine.sprite(
+    {
+      paintutils.loadImage("tile2"),
+      paintutils.loadImage("tile21"),
+      paintutils.loadImage("tile22")
+    },
+    true
+  ),
+  dragon = engine.sprite(
+    {
+      paintutils.loadImage("/dragon/1"),
+      paintutils.loadImage("/dragon/2"),
+      paintutils.loadImage("/dragon/3"),
+      paintutils.loadImage("/dragon/2"),
+      paintutils.loadImage("/dragon/1")
+    }
+  )
+}
+
+local tileset = engine.tileset(
+  {
+    g1 = engine.tile(sprites.grass1),
+    g2 = engine.tile(sprites.grass2),
+    st = engine.tile(sprites.stone)
+  },
+  4,
+  5
+)
+
+local tilemap = engine.tilemap(
+  tileset,
+  {
+    {"st", "st", "st", "st"},
+    {"st", "st", "st", "st"},
+    {"st", "st", "st", "st"},
+    {"st", "st", "st", "st"},
+  }
+)
+
+while true do
+  term.setBackgroundColor(colors.black)
+  term.clear()
+  tilemap:update()
+  tilemap:draw(3, 3)
+  sprites.player:update(function() end)
+  --sprites.dragon:update(function() end)
+
+  sleep(0.2)
+end

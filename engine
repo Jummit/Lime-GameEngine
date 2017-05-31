@@ -1,0 +1,79 @@
+function sprite(image, hasAnimation, x, y)
+  if not x then x=1 end
+  if not y then y=1 end
+  if hasAnimation then frame=1 end
+
+  return {
+    x=x, y=y, image=image, hasAnimation=hasAnimation, frame=frame,
+    draw = function(self, x, y)
+      if not x then x = self.x end
+      if not y then y = self.y end
+      if self.hasAnimation then
+        paintutils.drawImage(self.image[self.frame], x, y)
+      else
+        paintutils.drawImage(self.image, x, y)
+      end
+    end,
+    set_pos = function(self, x, y)
+      self.x = x
+      self.y = y
+    end,
+    next_frame = function(self)
+      if self.hasAnimation then
+        if self.frame==#self.image then
+          self.frame = 1
+        else
+          self.frame = self.frame+1
+        end
+      end
+    end,
+    update = function(self, func)
+      self:draw()
+      self:next_frame()
+      func(self)
+    end
+  }
+end
+
+function tile(sprite)
+  return {
+    sprite=sprite
+  }
+end
+
+function tileset(tiles, width, height)
+  for name, tile in pairs(tiles) do
+    if not name then error("tile in tileset needs key") end
+  end
+  return {
+    tiles=tiles, width=width, height=height
+  }
+end
+
+function tilemap(tileset, tilemap, entitys)
+  return {
+    tileset=tileset, tilemap=tilemap, entitys=entitys,
+    get_tile = function(self, x, y)
+      return self.tileset[self.tilemap[y][x]]
+    end,
+    set_tile = function(self, x, y, tilename)
+      if not tileset[tilename] then error("tile in tileset with this name not exist") end
+      self.tilemap[y][x] = tilename
+    end,
+    draw = function(self, draw_x, draw_y)
+      for y = 1, #self.tilemap do
+        for x = 1, #self.tilemap[y] do
+          self.tileset.tiles[self.tilemap[y][x]].sprite:draw(
+            y*self.tileset.height+draw_y-self.tileset.height,
+            x*self.tileset.width+draw_x-self.tileset.width
+          )
+        end
+      end
+    end,
+    update = function(self)
+      for name, tile in pairs(self.tileset.tiles) do
+        tile.sprite:next_frame()
+      end
+    end
+  }
+end
