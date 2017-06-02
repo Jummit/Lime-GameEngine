@@ -1,11 +1,20 @@
 function sprite(image, hasAnimation, x, y)
   if not x then x=1 end
   if not y then y=1 end
-  if paintutils.loadImage(image) then
-    local image = paintutils.loadImage(image)
+  if type(image) == "string" then
+    if paintutils.loadImage(image) then
+      local image = paintutils.loadImage(image)
+    else
+      error("image does not exist")
+    end
   else
-    error("image does not exist")
+    local newImages = {}
+    for i=1, #image do
+      newImages[i] = paintutils.loadImage(image[i])
+    end
+    image = newImages
   end
+
   if hasAnimation then frame=1 end
   return {
     x=x, y=y, image=image, hasAnimation=hasAnimation, frame=frame,

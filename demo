@@ -3,12 +3,12 @@ os.loadAPI("engine")
 local sprites = {
   dragon = engine.sprite(
     {
-      paintutils.loadImage("/dragon/1"),
-      paintutils.loadImage("/dragon/2"),
-      paintutils.loadImage("/dragon/3"),
-      paintutils.loadImage("/dragon/4"),
-      paintutils.loadImage("/dragon/3"),
-      paintutils.loadImage("/dragon/2")
+      "/dragon/1",
+      "/dragon/2",
+      "/dragon/3",
+      "/dragon/4",
+      "/dragon/3",
+      "/dragon/2"
     },
     true,
     3,
@@ -46,7 +46,7 @@ local tilemap = engine.tilemap(
   }
 )
 
-while true do
+--while true do
   term.setBackgroundColor(colors.black)
   term.clear()
   tilemap:update()
@@ -54,4 +54,4 @@ while true do
   sprites.dragon:update(function() end)
 
   sleep(0.2)
-end
+--end
