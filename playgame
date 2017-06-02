@@ -1,0 +1,15 @@
+local arg = {...}
+
+local file = arg[1]
+
+if not fs.exists(file) then error("File does not exist!") end
+
+os.loadAPI(file)
+
+if file.load then
+  file.load()
+end
+
+if not file.update or not file.draw then
+  error("File needs update and draw funtion!")
+end
