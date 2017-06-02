@@ -56,3 +56,7 @@ end
 function draw()
   tilemap:draw(3, 3)
 end
+
+function mouse_click(button, x, y)
+  error("dsyf")
+end
