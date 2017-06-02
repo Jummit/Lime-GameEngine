@@ -9,12 +9,19 @@ function sprite(image, hasAnimation, x, y)
       if not x then x = self.x end
       if not y then y = self.y end
       if self.hasAnimation then
+        if #self.image == 0 then
+          error("no images for the animation")
+        end
         paintutils.drawImage(self.image[self.frame], x, y)
       else
+        if self.image~=nil then
+          error("no images to draw")
+        end
         paintutils.drawImage(self.image, x, y)
       end
     end,
     set_pos = function(self, x, y)
+      if not x or not y then error("x or y not declared") end
       self.x = x
       self.y = y
     end,
@@ -30,7 +37,9 @@ function sprite(image, hasAnimation, x, y)
     update = function(self, func)
       self:draw()
       self:next_frame()
-      func(self)
+      if func then
+        func(self)
+      end
     end
   }
 end
@@ -54,6 +63,7 @@ function tilemap(tileset, tilemap, entitys)
   return {
     tileset=tileset, tilemap=tilemap, entitys=entitys,
     get_tile = function(self, x, y)
+      if not x or not y then error("needed x and y for getting tile") end
       return self.tileset[self.tilemap[y][x]]
     end,
     set_tile = function(self, x, y, tilename)
@@ -61,6 +71,7 @@ function tilemap(tileset, tilemap, entitys)
       self.tilemap[y][x] = tilename
     end,
     draw = function(self, draw_x, draw_y)
+      if not draw_x or not draw_y then error("x anchor and y anchor are required to draw map") end
       for y = 1, #self.tilemap do
         for x = 1, #self.tilemap[y] do
           self.tileset.tiles[self.tilemap[y][x]].sprite:draw(
