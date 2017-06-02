@@ -1,8 +1,12 @@
 function sprite(image, hasAnimation, x, y)
   if not x then x=1 end
   if not y then y=1 end
+  if paintutils.loadImage(image) then
+    local image = paintutils.loadImage(image)
+  else
+    error("image does not exist")
+  end
   if hasAnimation then frame=1 end
-
   return {
     x=x, y=y, image=image, hasAnimation=hasAnimation, frame=frame,
     draw = function(self, x, y)

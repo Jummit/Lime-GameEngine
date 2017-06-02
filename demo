@@ -1,7 +1,7 @@
 os.loadAPI("engine")
 
 local sprites = {
-  player = engine.sprite(
+  dragon = engine.sprite(
     {
       paintutils.loadImage("/dragon/1"),
       paintutils.loadImage("/dragon/2"),
@@ -14,25 +14,16 @@ local sprites = {
     3,
     3
   ),
-  grass1 = engine.sprite(paintutils.loadImage("tile1")),
-  grass2 = engine.sprite(paintutils.loadImage("tile3")),
+  grass1 = engine.sprite("tiles/tile1"),
+  grass2 = engine.sprite("tiles/tile3"),
   stone = engine.sprite(
     {
-      paintutils.loadImage("tile2"),
-      paintutils.loadImage("tile21"),
-      paintutils.loadImage("tile22")
+      "tiles/tile2",
+      "tiles/tile21",
+      "tiles/tile22"
     },
     true
   ),
-  dragon = engine.sprite(
-    {
-      paintutils.loadImage("/dragon/1"),
-      paintutils.loadImage("/dragon/2"),
-      paintutils.loadImage("/dragon/3"),
-      paintutils.loadImage("/dragon/2"),
-      paintutils.loadImage("/dragon/1")
-    }
-  )
 }
 
 local tileset = engine.tileset(
@@ -60,8 +51,7 @@ while true do
   term.clear()
   tilemap:update()
   tilemap:draw(3, 3)
-  sprites.player:update(function() end)
-  --sprites.dragon:update(function() end)
+  sprites.dragon:update(function() end)
 
   sleep(0.2)
 end
