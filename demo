@@ -1,57 +1,58 @@
 os.loadAPI("engine")
 
-local sprites = {
-  dragon = engine.sprite(
-    {
-      "/dragon/1",
-      "/dragon/2",
-      "/dragon/3",
-      "/dragon/4",
-      "/dragon/3",
-      "/dragon/2"
-    },
-    true,
-    3,
-    3
-  ),
-  grass1 = engine.sprite("tiles/tile1"),
-  grass2 = engine.sprite("tiles/tile3"),
-  stone = engine.sprite(
-    {
-      "tiles/tile2",
-      "tiles/tile21",
-      "tiles/tile22"
-    },
-    true
-  ),
-}
-
-local tileset = engine.tileset(
-  {
-    g1 = engine.tile(sprites.grass1),
-    g2 = engine.tile(sprites.grass2),
-    st = engine.tile(sprites.stone)
-  },
-  4,
-  5
-)
-
-local tilemap = engine.tilemap(
-  tileset,
-  {
-    {"st", "st", "st", "st"},
-    {"st", "st", "st", "st"},
-    {"st", "st", "st", "st"},
-    {"st", "st", "st", "st"},
+function load()
+  sprites = {
+    dragon = engine.sprite(
+      {
+        "/dragon/1",
+        "/dragon/2",
+        "/dragon/3",
+        "/dragon/4",
+        "/dragon/3",
+        "/dragon/2"
+      },
+      true,
+      3,
+      3
+    ),
+    grass1 = engine.sprite("tiles/tile1"),
+    grass2 = engine.sprite("tiles/tile3"),
+    stone = engine.sprite(
+      {
+        "tiles/tile2",
+        "tiles/tile21",
+        "tiles/tile22"
+      },
+      true
+    ),
   }
-)
 
---while true do
-  term.setBackgroundColor(colors.black)
-  term.clear()
+  tileset = engine.tileset(
+    {
+      g1 = engine.tile(sprites.grass1),
+      g2 = engine.tile(sprites.grass2),
+      st = engine.tile(sprites.stone)
+    },
+    4,
+    5
+  )
+
+  tilemap = engine.tilemap(
+    tileset,
+    {
+      {"st", "st", "st", "st"},
+      {"st", "st", "st", "st"},
+      {"st", "st", "st", "st"},
+      {"st", "st", "st", "st"},
+    }
+  )
+end
+
+function update(dt)
   tilemap:update()
-  tilemap:draw(3, 3)
-  sprites.dragon:update(function() end)
+  sprites.dragon:update()
+end
 
-  sleep(0.2)
---end
+function draw()
+  tilemap:draw(3, 3)
+end
