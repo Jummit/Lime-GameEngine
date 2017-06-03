@@ -39,12 +39,7 @@ function load()
 
   tilemap = engine.tilemap(
     tileset,
-    {
-      {"st", "st", "st", "st"},
-      {"st", "st", "st", "st"},
-      {"st", "st", "st", "st"},
-      {"st", "st", "st", "st"},
-    }
+    {}
   )
 end
 
@@ -58,5 +53,5 @@ function draw()
 end
 
 function mouse_click(button, x, y)
-  error("dsyf")
+  error("")
 end

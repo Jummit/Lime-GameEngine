@@ -17,14 +17,14 @@ if not game.update or not game.draw then
   error("File needs update and draw funtion!")
 end
 
-local dt = 0.4
+local dt = 0.27
 if type(arg[2]) == "string" then dt = tonumber(arg[2]) end
 local exit = function()
   term.setBackgroundColor(colors.black)
   term.setCursorPos(1, 1)
   term.setTextColor(colors.white)
   term.clear()
-  print("Thanks for playing '"..arg[1].."' with "..dt.." fps!")
+  print("Thanks for playing '"..arg[1].."' with a delta time of "..dt.."!")
 end
 while true do
   term.setBackgroundColor(colors.black)
