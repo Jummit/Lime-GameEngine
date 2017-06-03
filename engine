@@ -101,3 +101,52 @@ function tilemap(tileset, tilemap, entitys)
     end
   }
 end
+
+function achievement(title, description, is_completed_function, tier, x, y, requirements, is_start)
+  return {
+    title=title, description=descripion, is_completed_function=is_completed_functio, tier=tier, x=x, y=y, requirements=requirements, is_completed=false, is_start=is_start
+  }
+end
+
+function achievements(achievements, tier_sprites, completed_tier_sprites, line_color)
+  local sprites = {}
+  local comp_sprites = {}
+  for tier, image in pairs(tier_sprites) do
+    sprites[tier] = paintutils.loadImage(image)
+  end
+  for tier, image in pairs(completed_tier_sprites) do
+    comp_sprites[tier] = paintutils.loadImage(image)
+  end
+
+  tier_sprites = sprites
+  completed_tier_sprites = comp_sprites
+
+  return {
+    achievements=achievements, tier_sprites=tier_sprites, completed_tier_sprites=completed_tier_sprites, line_color=line_color,
+    draw = function(self)
+      for _, achievement in pairs(self.achievements) do
+        if not achievement.is_start then
+          for _, requ_achi in pairs(self.achievements) do
+            if requ_achi.title == achievement.requirements then
+              paintutils.drawLine(achievement.x, achievement.y, requ_achi.x, requ_achi.y, colors[self.line_color])
+            end
+          end
+        end
+      end
+      for _, achievement in pairs(self.achievements) do
+        local sprite
+        if achievement.is_completed then
+          sprite = self.completed_tier_sprites[achievement.tier]
+        else
+          sprite = self.tier_sprites[achievement.tier]
+        end
+        paintutils.drawImage(sprite, achievement.x, achievement.y)
+      end
+    end,
+    update = function(self)
+    end
+  }
+end
+
+function inventory()
+end

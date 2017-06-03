@@ -1,0 +1,28 @@
+os.loadAPI("engine")
+
+function load()
+  achievements = engine.achievements(
+    {
+      engine.achievement("click!", "click with the mouse!", function() end, "start", 10, 10, nil, true),
+      engine.achievement("click again!", "click with the mouse!", function() end, "normal", 40, 14, "click!")
+    },
+    {
+      normal = "/achievementSprites/unfinished/normal",
+      ["end"] = "/achievementSprites/unfinished/end",
+      start = "/achievementSprites/unfinished/start"
+    },
+    {
+      normal = "/achievementSprites/finished/normal",
+      ["end"] = "/achievementSprites/finished/end",
+      start = "/achievementSprites/finished/start"
+    },
+    "gray"
+  )
+end
+
+function update(dt)
+end
+
+function draw()
+  achievements:draw()
+end
